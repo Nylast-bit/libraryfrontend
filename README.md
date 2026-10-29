@@ -54,3 +54,14 @@ Cada módulo (`books`, `authors`) contiene sus propios tipos, su servicio de acc
 - **Capa de servicios:** las páginas nunca llaman a `fetch` directamente. `shared/api/client.ts` centraliza la URL base, los headers y el manejo de errores, y cada módulo expone su servicio (`bookService`, `authorService`).
 - **Estado local tras escribir:** FakeRestAPI responde a POST, PUT y DELETE pero no persiste los cambios. Por eso, tras una operación exitosa, la UI actualiza su estado local con la respuesta en lugar de volver a pedir la lista. Los registros nuevos reciben un id local, ya que la API devuelve `0`; su página de detalle no existe en la API.
 - **Tipos espejo de los DTOs:** `types.ts` de cada módulo replica los DTOs del backend (`BookResponse`, `BookDetailResponse`, `AuthorResponse`).
+
+## Docker
+
+Para levantar frontend y backend juntos, usa el `docker-compose.yml` del repositorio backend (ver su README).
+
+Para construir solo el frontend:
+
+```bash
+docker build -t library-web --build-arg NEXT_PUBLIC_API_URL=http://localhost:5053 .
+docker run -p 3000:3000 library-web
+```
